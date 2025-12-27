@@ -299,8 +299,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 1.8 }}
           >
             <motion.a
-              href="/public/resume/y.pdf"
-              download="z_Resume.pdf"
+              href="/resume/y.pdf"
+              download="Yafet_Zekariyas_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group inline-flex items-center gap-2.5 px-6 py-3 bg-amber-500/10 border-2 border-amber-500/50 rounded-xl font-semibold text-amber-400 hover:bg-amber-500/20 hover:border-amber-400 transition-all"
