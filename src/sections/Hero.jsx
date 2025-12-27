@@ -299,7 +299,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 1.8 }}
           >
             <motion.a
-              href="/resume/y.pdf"
+              href="/resume/Yafet_Zekariyas_Resume.pdf"
               download="Yafet_Zekariyas_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
