@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion';
-import { Code2, Server, Wrench, Zap } from 'lucide-react';
+import { Code2, Server, Wrench, Zap, Sparkles } from 'lucide-react';
 import SectionWrapper, { SectionHeader } from '../components/SectionWrapper';
 import { useRef, useState, useEffect } from 'react';
 
@@ -35,8 +35,9 @@ const colorClasses = {
     borderHover: 'group-hover:border-cyan-400/50',
     text: 'text-cyan-400',
     icon: 'text-cyan-400',
-    glow: 'shadow-cyan-500/20',
-    tag: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/25 hover:border-cyan-400/50',
+    glow: 'shadow-cyan-500/25',
+    glowHover: 'group-hover:shadow-cyan-500/40',
+    tag: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/25 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/10',
     gradient: 'from-cyan-500/20 to-blue-500/20',
   },
   emerald: {
@@ -46,8 +47,9 @@ const colorClasses = {
     borderHover: 'group-hover:border-emerald-400/50',
     text: 'text-emerald-400',
     icon: 'text-emerald-400',
-    glow: 'shadow-emerald-500/20',
-    tag: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25 hover:border-emerald-400/50',
+    glow: 'shadow-emerald-500/25',
+    glowHover: 'group-hover:shadow-emerald-500/40',
+    tag: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10',
     gradient: 'from-emerald-500/20 to-teal-500/20',
   },
   purple: {
@@ -57,8 +59,9 @@ const colorClasses = {
     borderHover: 'group-hover:border-purple-400/50',
     text: 'text-purple-400',
     icon: 'text-purple-400',
-    glow: 'shadow-purple-500/20',
-    tag: 'bg-purple-500/15 text-purple-300 border-purple-500/30 hover:bg-purple-500/25 hover:border-purple-400/50',
+    glow: 'shadow-purple-500/25',
+    glowHover: 'group-hover:shadow-purple-500/40',
+    tag: 'bg-purple-500/15 text-purple-300 border-purple-500/30 hover:bg-purple-500/25 hover:border-purple-400/50 hover:shadow-lg hover:shadow-purple-500/10',
     gradient: 'from-purple-500/20 to-pink-500/20',
   },
 };
@@ -117,13 +120,13 @@ function SkillCategory({ category, index }) {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ y: -10, scale: 1.02 }}
-      className={`group relative p-6 md:p-8 rounded-2xl border ${colors.border} ${colors.borderHover} ${colors.bg} ${colors.bgHover} backdrop-blur-sm transition-all duration-500`}
+      className={`group relative p-6 md:p-8 rounded-2xl border ${colors.border} ${colors.borderHover} ${colors.bg} ${colors.bgHover} backdrop-blur-sm transition-all duration-500 shadow-xl ${colors.glow} ${colors.glowHover}`}
     >
       {/* Animated glow effect on hover */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 1 : 0 }}
-        className={`absolute -inset-0.5 bg-gradient-to-r ${colors.gradient} rounded-2xl blur-xl`}
+        className={`absolute -inset-1 bg-gradient-to-r ${colors.gradient} rounded-2xl blur-xl`}
       />
 
       {/* Card content */}
@@ -154,7 +157,7 @@ function SkillCategory({ category, index }) {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-slate-400 mb-6">{category.description}</p>
+        <p className="text-sm text-slate-400 mb-6 leading-relaxed">{category.description}</p>
 
         {/* Skills as animated tags */}
         <motion.div
@@ -163,7 +166,7 @@ function SkillCategory({ category, index }) {
           animate={isInView ? 'visible' : 'hidden'}
           className="flex flex-wrap gap-3"
         >
-          {category.skills.map((skill, i) => (
+          {category.skills.map((skill) => (
             <motion.span
               key={skill}
               variants={skillTagVariants}
@@ -173,7 +176,7 @@ function SkillCategory({ category, index }) {
                 transition: { type: 'spring', stiffness: 400 },
               }}
               whileTap={{ scale: 0.95 }}
-              className={`px-4 py-2 text-sm font-medium rounded-xl border cursor-default transition-colors duration-200 ${colors.tag}`}
+              className={`px-4 py-2 text-sm font-medium rounded-xl border cursor-default transition-all duration-200 ${colors.tag}`}
             >
               {skill}
             </motion.span>
@@ -185,7 +188,7 @@ function SkillCategory({ category, index }) {
 }
 
 // Animated skill counter
-function SkillCounter({ value, label }) {
+function SkillCounter({ value, label, icon: Icon }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -217,12 +220,14 @@ function SkillCounter({ value, label }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className="text-center"
+      whileHover={{ y: -5 }}
+      className="text-center cursor-default"
     >
-      <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-        {count}+
+      <div className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-white mb-1">
+        {Icon && <Icon className="w-6 h-6 text-indigo-400" />}
+        <span>{count}+</span>
       </div>
-      <div className="text-sm text-slate-500">{label}</div>
+      <div className="text-sm text-slate-500 font-medium">{label}</div>
     </motion.div>
   );
 }
@@ -301,12 +306,13 @@ export default function Skills() {
             className="flex gap-12"
           >
             {[...allSkills, ...allSkills, ...allSkills].map((skill, i) => (
-              <span
+              <motion.span
                 key={i}
-                className="text-2xl md:text-3xl font-bold text-slate-700/50 whitespace-nowrap font-[Space_Grotesk] hover:text-slate-500 transition-colors"
+                whileHover={{ color: 'rgba(148, 163, 184, 1)', scale: 1.05 }}
+                className="text-2xl md:text-3xl font-bold text-slate-700/50 whitespace-nowrap font-[Space_Grotesk] transition-all cursor-default"
               >
                 {skill}
-              </span>
+              </motion.span>
             ))}
           </motion.div>
         </motion.div>
@@ -319,10 +325,13 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="mt-8 text-center"
         >
-          <p className="text-slate-500 text-sm max-w-xl mx-auto flex items-center justify-center gap-2">
-            <Zap className="w-4 h-4 text-amber-500" />
+          <motion.p
+            whileHover={{ scale: 1.02 }}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-slate-800/50 border border-slate-700/50 text-slate-400 text-sm cursor-default"
+          >
+            <Sparkles className="w-4 h-4 text-amber-500" />
             Self-taught and continuously expanding my skillset through hands-on projects.
-          </p>
+          </motion.p>
         </motion.div>
       </div>
     </SectionWrapper>

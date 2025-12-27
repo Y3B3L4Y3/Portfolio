@@ -1,0 +1,28 @@
+{
+  "name": "Yafet Zekariyas - Portfolio",
+  "short_name": "YZ Portfolio",
+  "description": "Self-taught Full-Stack Developer and Data Engineer from Ethiopia. ALX-certified professional.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030014",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "technology", "development"],
+  "lang": "en",
+  "dir": "ltr"
+}
+

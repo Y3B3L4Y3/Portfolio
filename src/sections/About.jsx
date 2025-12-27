@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
-import { Code, Database, Shield, Sparkles, GraduationCap, MapPin, Calendar, Heart, Rocket, BookOpen } from 'lucide-react';
+import { Code, Database, Shield, Sparkles, GraduationCap, MapPin, Calendar, BookOpen, Briefcase, Award } from 'lucide-react';
 import SectionWrapper, { SectionHeader } from '../components/SectionWrapper';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const highlights = [
   {
@@ -112,6 +112,271 @@ const itemVariants = {
   },
 };
 
+// Professional animated profile card component
+function ProfileCard() {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, x: -50, rotate: -5 }}
+      whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.8, type: 'spring' }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="relative"
+    >
+      <div className="relative aspect-square max-w-md mx-auto">
+        {/* Animated orbiting rings */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          className="absolute inset-[-20px] rounded-full border border-indigo-500/20"
+        />
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          className="absolute inset-[-40px] rounded-full border border-purple-500/10"
+        />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+          className="absolute inset-[-60px] rounded-full border border-cyan-500/5"
+        />
+
+        {/* Animated pulsing glow */}
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 to-purple-500/30 rounded-3xl blur-2xl"
+        />
+
+        {/* Main card container */}
+        <motion.div
+          whileHover={{ scale: 1.02, rotateY: 5, rotateX: -5 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+          className="relative z-10 aspect-square glass-card rounded-3xl overflow-hidden shadow-2xl shadow-indigo-500/20"
+        >
+          {/* Animated gradient border */}
+          <motion.div
+            className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-500"
+            animate={{
+              background: [
+                'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%)',
+                'linear-gradient(135deg, #a855f7 0%, #06b6d4 50%, #6366f1 100%)',
+                'linear-gradient(135deg, #06b6d4 0%, #6366f1 50%, #a855f7 100%)',
+                'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%)',
+              ],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+          >
+            <div className="w-full h-full bg-slate-900 rounded-3xl" />
+          </motion.div>
+
+          {/* Content */}
+          <div className="relative w-full h-full flex items-center justify-center p-8">
+            <div className="text-center">
+              {/* Animated avatar with glow */}
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
+                className="relative inline-block mb-6"
+              >
+                {/* Outer glow ring */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-[-8px] rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 blur-md"
+                />
+
+                {/* Avatar circle */}
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 10 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative w-32 h-32 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-500 flex items-center justify-center shadow-2xl cursor-pointer"
+                >
+                  {/* Inner border */}
+                  <div className="absolute inset-[3px] rounded-full bg-slate-900" />
+                  
+                  {/* Initials with gradient */}
+                  <motion.span
+                    animate={isHovered ? { scale: [1, 1.1, 1] } : {}}
+                    transition={{ duration: 0.5 }}
+                    className="relative text-5xl font-bold bg-gradient-to-br from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent font-[Space_Grotesk]"
+                  >
+                    YZ
+                  </motion.span>
+                </motion.div>
+
+                {/* Floating particles around avatar */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 rounded-full bg-indigo-400"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                    }}
+                    animate={{
+                      x: [0, Math.cos((i * 60 * Math.PI) / 180) * 80],
+                      y: [0, Math.sin((i * 60 * Math.PI) / 180) * 80],
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                      ease: 'easeOut',
+                    }}
+                  />
+                ))}
+              </motion.div>
+
+              {/* Name with typing effect */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+              >
+                <motion.p
+                  className="text-xl font-bold text-white mb-2 font-[Space_Grotesk]"
+                  animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+                >
+                  Yafet Zekariyas
+                </motion.p>
+                
+                {/* Role badges */}
+                <div className="flex flex-wrap justify-center gap-2 mt-3">
+                  <motion.span
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="px-3 py-1 text-xs font-medium bg-indigo-500/20 text-indigo-400 rounded-full border border-indigo-500/30"
+                  >
+                    Full-Stack Dev
+                  </motion.span>
+                  <motion.span
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="px-3 py-1 text-xs font-medium bg-purple-500/20 text-purple-400 rounded-full border border-purple-500/30"
+                  >
+                    Data Engineer
+                  </motion.span>
+                </div>
+
+                {/* Status indicator */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full"
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="text-xs font-medium text-emerald-400">Available for Work</span>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Animated grid overlay */}
+          <motion.div
+            animate={{ opacity: isHovered ? 0.3 : 0.15 }}
+            className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none"
+          />
+        </motion.div>
+
+        {/* Floating badges with enhanced animations */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0, x: 20 }}
+          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.15, y: -5, rotate: 5 }}
+          className="absolute -top-4 -right-4 z-20"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 bg-indigo-500/30 blur-lg rounded-xl" />
+            <div className="relative px-4 py-2.5 glass-card rounded-xl shadow-xl">
+              <span className="text-sm font-bold text-indigo-400">3+ Years</span>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0, x: -20 }}
+          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.15, y: 5, rotate: -5 }}
+          className="absolute -bottom-4 -left-4 z-20"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 bg-purple-500/30 blur-lg rounded-xl" />
+            <div className="relative px-4 py-2.5 glass-card rounded-xl shadow-xl">
+              <span className="text-sm font-bold text-purple-400">20+ Projects</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Self-taught badge with shine effect */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.15, x: 5 }}
+          className="absolute top-1/2 -right-10 z-20"
+        >
+          <div className="relative overflow-hidden px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-xl shadow-emerald-500/30">
+            {/* Shine effect */}
+            <motion.div
+              animate={{ x: [-100, 100] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              className="absolute inset-0 w-10 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+            />
+            <span className="relative text-sm font-bold text-white">Self-Taught</span>
+          </div>
+        </motion.div>
+
+        {/* ALX Certified badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.15, x: -5 }}
+          className="absolute top-1/3 -left-8 z-20"
+        >
+          <div className="relative overflow-hidden px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl shadow-xl shadow-amber-500/30">
+            <motion.div
+              animate={{ x: [-100, 100] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, delay: 1 }}
+              className="absolute inset-0 w-10 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+            />
+            <span className="relative text-sm font-bold text-white flex items-center gap-1">
+              <Award className="w-4 h-4" />
+              ALX Certified
+            </span>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -144,100 +409,8 @@ export default function About() {
         />
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left: Image/Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: -50, rotate: -5 }}
-            whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8, type: 'spring' }}
-            className="relative"
-          >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Animated background decoration */}
-              <motion.div
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-3xl blur-2xl"
-              />
-              
-              {/* Main image container */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="relative z-10 aspect-square bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-3xl border border-slate-700/50 overflow-hidden"
-              >
-                {/* Placeholder avatar */}
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/25"
-                    >
-                      <span className="text-5xl font-bold text-white font-[Space_Grotesk]">YZ</span>
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.5 }}
-                      className="text-slate-400"
-                    >
-                      <p className="text-lg font-medium text-white mb-2">Yafet Zekariyas</p>
-                      <p className="text-sm">Self-Taught Developer</p>
-                      <p className="text-sm text-indigo-400">& Data Engineer</p>
-                    </motion.div>
-                  </div>
-                </div>
-
-                {/* Animated grid lines */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20" />
-              </motion.div>
-
-              {/* Floating badges with bounce animation */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0, y: -20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-                whileHover={{ scale: 1.1, y: -5 }}
-                className="absolute -top-4 -right-4 z-20 px-4 py-2 bg-slate-800/90 backdrop-blur-sm rounded-xl border border-slate-700 shadow-xl"
-              >
-                <span className="text-sm font-medium text-indigo-400">3+ Years</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-                whileHover={{ scale: 1.1, y: 5 }}
-                className="absolute -bottom-4 -left-4 z-20 px-4 py-2 bg-slate-800/90 backdrop-blur-sm rounded-xl border border-slate-700 shadow-xl"
-              >
-                <span className="text-sm font-medium text-purple-400">20+ Projects</span>
-              </motion.div>
-
-              {/* Self-taught badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
-                whileHover={{ scale: 1.1 }}
-                className="absolute top-1/2 -right-6 z-20 px-3 py-2 bg-gradient-to-r from-emerald-600/90 to-teal-600/90 backdrop-blur-sm rounded-xl shadow-xl"
-              >
-                <span className="text-xs font-bold text-white flex items-center gap-1">
-                  <Heart className="w-3 h-3" />
-                  Self-Taught
-                </span>
-              </motion.div>
-            </div>
-          </motion.div>
+          {/* Left: Professional Animated Profile Card */}
+          <ProfileCard />
 
           {/* Right: Content */}
           <motion.div
@@ -288,14 +461,49 @@ export default function About() {
               </motion.p>
             </motion.div>
 
-            {/* Education Card with hover effect */}
+            {/* Professional Experience Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.02, y: -3 }}
+              className="mb-5 p-5 rounded-2xl glass-card card-glow cursor-default"
+            >
+              <div className="flex items-start gap-4">
+                <motion.div
+                  whileHover={{ rotate: 10 }}
+                  className="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0"
+                >
+                  <Briefcase className="w-6 h-6 text-indigo-400" />
+                </motion.div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-1 text-xs font-semibold bg-indigo-500/20 text-indigo-400 rounded-full border border-indigo-500/30">
+                      Experience
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white font-[Space_Grotesk] mb-1">
+                    Full-Stack Developer & Project Leader
+                  </h4>
+                  <p className="text-indigo-400 font-medium text-sm mb-2">
+                    ENNLIT Technology • July 2024 - November 2024
+                  </p>
+                  <p className="text-sm text-slate-400 leading-relaxed">
+                    Led development teams, designed RESTful APIs, and delivered full-stack web applications using modern technologies.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Education Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="mb-6 p-5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-300 cursor-default"
+              whileHover={{ scale: 1.02, y: -3 }}
+              className="mb-5 p-5 rounded-2xl glass-card card-glow cursor-default"
             >
               <div className="flex items-start gap-4">
                 <motion.div
@@ -306,7 +514,7 @@ export default function About() {
                 </motion.div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 text-xs font-semibold bg-cyan-500/20 text-cyan-400 rounded-full border border-cyan-500/30">
+                    <span className="px-2.5 py-1 text-xs font-semibold bg-cyan-500/20 text-cyan-400 rounded-full border border-cyan-500/30">
                       Education
                     </span>
                   </div>
@@ -314,7 +522,7 @@ export default function About() {
                     Electrical and Computer Engineering
                   </h4>
                   <p className="text-cyan-400 font-medium text-sm mb-2">
-                    Bachelor's Degree
+                    Bachelor's Degree • Electronics Stream
                   </p>
                   <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
                     <span className="flex items-center gap-1.5">
@@ -323,7 +531,7 @@ export default function About() {
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Calendar className="w-4 h-4 text-slate-500" />
-                      Ethiopia
+                      2021 - 2025
                     </span>
                   </div>
                 </div>
@@ -336,8 +544,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              className="mb-6 p-5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300"
+              whileHover={{ scale: 1.02, y: -3 }}
+              className="mb-6 p-5 rounded-2xl glass-card card-glow cursor-default"
             >
               <div className="flex items-start gap-4">
                 <motion.div
@@ -348,7 +556,7 @@ export default function About() {
                 </motion.div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 text-xs font-semibold bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">
+                    <span className="px-2.5 py-1 text-xs font-semibold bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">
                       Self-Taught Journey
                     </span>
                   </div>
@@ -357,13 +565,13 @@ export default function About() {
                   </h4>
                   <p className="text-sm text-slate-400 leading-relaxed">
                     From online courses to documentation, from tutorials to building real projects — 
-                    every day is an opportunity to grow. <span className="text-emerald-400">ALX certified</span> and always hungry for more.
+                    every day is an opportunity to grow. <span className="text-emerald-400 font-medium">ALX certified</span> and always hungry for more.
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Skill Tags with staggered animation */}
+            {/* Skill Tags */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -371,12 +579,12 @@ export default function About() {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              {skillCategories.map((category, index) => (
+              {skillCategories.map((category) => (
                 <motion.div
                   key={category.title}
                   variants={itemVariants}
                   whileHover={{ scale: 1.02 }}
-                  className={`p-4 rounded-xl ${colorClasses[category.color].bg} border ${colorClasses[category.color].border} transition-all duration-300`}
+                  className={`p-4 rounded-xl ${colorClasses[category.color].bg} border ${colorClasses[category.color].border} transition-all duration-300 hover:shadow-lg`}
                 >
                   <h4 className={`text-sm font-semibold mb-3 ${colorClasses[category.color].text}`}>
                     {category.title}
@@ -390,7 +598,7 @@ export default function About() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 + i * 0.05 }}
                         whileHover={{ scale: 1.1, y: -2 }}
-                        className={`px-3 py-1.5 text-sm font-medium rounded-lg border ${colorClasses[category.color].tag} cursor-default transition-all`}
+                        className={`px-3 py-1.5 text-sm font-medium rounded-lg border ${colorClasses[category.color].tag} cursor-default transition-all shadow-sm`}
                       >
                         {skill}
                       </motion.span>
@@ -402,7 +610,7 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Highlights grid with professional animations */}
+        {/* Highlights grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -410,12 +618,12 @@ export default function About() {
           viewport={{ once: true, margin: '-50px' }}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-20"
         >
-          {highlights.map((item, index) => (
+          {highlights.map((item) => (
             <motion.div
               key={item.title}
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.02 }}
-              className={`group p-6 bg-slate-800/30 rounded-2xl border border-slate-700/30 hover:border-${item.color}-500/30 transition-all duration-300 cursor-default`}
+              className="group p-6 glass-card rounded-2xl card-glow cursor-default"
             >
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
@@ -426,7 +634,7 @@ export default function About() {
               <h3 className="text-lg font-semibold text-white mb-2 font-[Space_Grotesk]">
                 {item.title}
               </h3>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-400 leading-relaxed">
                 {item.description}
               </p>
             </motion.div>

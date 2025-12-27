@@ -1,102 +1,100 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight, X, Code, Globe, Folder, Star } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight, X, Code, Globe, Folder, Star, Coffee, ShoppingCart, ChefHat, BarChart3, Layers, Server, Layout, ImageOff } from 'lucide-react';
 import SectionWrapper, { SectionHeader } from '../components/SectionWrapper';
 import Button from '../components/Button';
 
 const projects = [
   {
-    title: 'E-Commerce Platform',
-    description: 'A full-featured e-commerce platform with user authentication, product management, shopping cart, and payment integration.',
-    longDescription: 'Built a comprehensive e-commerce solution featuring secure user authentication, dynamic product catalog, real-time inventory management, shopping cart with session persistence, and Stripe payment integration. Implemented responsive design for optimal mobile shopping experience.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    image: null,
-    github: 'https://github.com/Y3B3L4Y3',
-    demo: 'https://example.com',
+    title: 'Shaafamo Coffee',
+    description: 'A modern, elegant coffee shop website with beautiful UI/UX design, responsive layout, and smooth animations.',
+    longDescription: 'Shaafamo Coffee is a professionally designed coffee shop website built with TypeScript and modern web technologies. Features include an elegant landing page, menu showcase, about section, and contact information. The site is fully responsive and deployed on Vercel for optimal performance.',
+    tags: ['TypeScript', 'React', 'TailwindCSS', 'Vercel'],
+    icon: Coffee,
+    image: '/projects/shaafamo-coffee.png',
+    github: 'https://github.com/Y3B3L4Y3/Shaafamo-Coffee',
+    demo: 'https://shaafamo-coffee.vercel.app',
     featured: true,
     category: 'Web App',
-    color: 'indigo',
+    color: 'amber',
+    stats: { commits: 4, language: 'TypeScript' },
   },
   {
-    title: 'Data Analytics Dashboard',
-    description: 'Interactive dashboard for visualizing business metrics and KPIs with real-time data updates and custom reporting.',
-    longDescription: 'Developed an analytics dashboard that transforms raw business data into actionable insights. Features include customizable widgets, real-time data synchronization, automated report generation, and interactive data visualizations using Power BI integration.',
-    tags: ['React', 'Python', 'Power BI', 'PostgreSQL'],
-    image: null,
-    github: 'https://github.com/Y3B3L4Y3',
-    demo: 'https://example.com',
+    title: 'Agora E-Commerce',
+    description: 'Full-stack e-commerce platform with admin panel, user authentication, product management, and order processing.',
+    longDescription: 'A comprehensive e-commerce catalog built as part of the ALX Project Nexus. Features include user authentication with JWT, role-based access control (Super Admin, Admin, Moderator, Editor, Viewer), product CRUD operations, order management, and a responsive admin dashboard. Backend API deployed on Render with MySQL database.',
+    tags: ['TypeScript', 'React', 'Node.js', 'TailwindCSS', 'MySQL'],
+    icon: ShoppingCart,
+    image: '/projects/agora-ecommerce.png',
+    github: 'https://github.com/Y3B3L4Y3/alx-project-nexus',
+    demo: 'https://alx-project-nexus-tau-sage.vercel.app',
     featured: true,
-    category: 'Data',
+    category: 'Full-Stack',
+    color: 'indigo',
+    stats: { commits: 35, language: 'TypeScript' },
+  },
+  {
+    title: 'Resepi Recipe App',
+    description: 'A Python-based recipe application for discovering, saving, and sharing delicious recipes with an intuitive interface.',
+    longDescription: 'Resepi is a feature-rich recipe application built with Python, designed for food enthusiasts. Users can browse recipes, view detailed cooking instructions, save favorites, and explore cuisines from around the world. Built with Python backend and modern web technologies for a seamless user experience.',
+    tags: ['Python', 'Django', 'SQLite'],
+    icon: ChefHat,
+    image: '/projects/resepi-app.png',
+    github: 'https://github.com/Y3B3L4Y3/Resepi_app_final-project',
+    demo: null,
+    featured: false,
+    category: 'Python App',
     color: 'emerald',
+    stats: { commits: 10, language: 'Python' },
   },
   {
-    title: 'Secure Task Manager',
-    description: 'Collaborative task management tool with end-to-end encryption and secure coding practices implemented.',
-    longDescription: 'A security-focused task management application implementing secure coding practices, input validation, XSS protection, and data encryption. Features team collaboration, real-time updates, and comprehensive activity logging for audit trails.',
-    tags: ['Next.js', 'TypeScript', 'Prisma', 'Security'],
-    image: null,
-    github: 'https://github.com/Y3B3L4Y3',
-    demo: 'https://example.com',
+    title: 'Data Visualization Dashboard',
+    description: 'Interactive data visualization project showcasing charts, graphs, and analytical insights using Python.',
+    longDescription: 'A data visualization project demonstrating proficiency in transforming raw data into meaningful visual insights. Features various chart types including bar charts, line graphs, pie charts, and interactive elements. Built with Python data science libraries to showcase data analysis and visualization skills.',
+    tags: ['Python', 'Jupyter Notebook', 'Matplotlib', 'Data Analysis'],
+    icon: BarChart3,
+    image: '/projects/data-viz.png',
+    github: 'https://github.com/Y3B3L4Y3/data_visualization-',
+    demo: null,
     featured: false,
-    category: 'Cybersecurity',
+    category: 'Data Analytics',
     color: 'purple',
-  },
-  {
-    title: 'ETL Data Pipeline',
-    description: 'Automated data pipeline for processing and transforming large datasets from multiple sources.',
-    longDescription: 'Engineered a robust ETL pipeline using Python and Apache Airflow for automated data extraction, transformation, and loading. Handles multiple data sources, implements data quality checks, and provides monitoring dashboards for pipeline health.',
-    tags: ['Python', 'Apache Airflow', 'AWS', 'PostgreSQL'],
-    image: null,
-    github: 'https://github.com/Y3B3L4Y3',
-    demo: null,
-    featured: false,
-    category: 'Data Engineering',
-    color: 'cyan',
-  },
-  {
-    title: 'Network Security Scanner',
-    description: 'Web-based vulnerability scanner with automated reporting and remediation suggestions.',
-    longDescription: 'Developed a network security assessment tool that performs automated vulnerability scanning, port analysis, and security audits. Generates detailed reports with risk scores and provides remediation recommendations based on industry best practices.',
-    tags: ['Python', 'Node.js', 'Docker', 'Security'],
-    image: null,
-    github: 'https://github.com/Y3B3L4Y3',
-    demo: null,
-    featured: false,
-    category: 'Cybersecurity',
-    color: 'rose',
+    stats: { commits: 8, language: 'Python' },
   },
 ];
 
 const colorClasses = {
+  amber: {
+    gradient: 'from-amber-600/30 to-orange-600/30',
+    gradientSolid: 'from-amber-500 to-orange-500',
+    text: 'text-amber-400',
+    border: 'border-amber-500/30',
+    bg: 'bg-amber-500/20',
+    iconBg: 'bg-amber-500/20',
+  },
   indigo: {
     gradient: 'from-indigo-600/30 to-purple-600/30',
+    gradientSolid: 'from-indigo-500 to-purple-500',
     text: 'text-indigo-400',
     border: 'border-indigo-500/30',
     bg: 'bg-indigo-500/20',
+    iconBg: 'bg-indigo-500/20',
   },
   emerald: {
     gradient: 'from-emerald-600/30 to-teal-600/30',
+    gradientSolid: 'from-emerald-500 to-teal-500',
     text: 'text-emerald-400',
     border: 'border-emerald-500/30',
     bg: 'bg-emerald-500/20',
+    iconBg: 'bg-emerald-500/20',
   },
   purple: {
     gradient: 'from-purple-600/30 to-pink-600/30',
+    gradientSolid: 'from-purple-500 to-pink-500',
     text: 'text-purple-400',
     border: 'border-purple-500/30',
     bg: 'bg-purple-500/20',
-  },
-  cyan: {
-    gradient: 'from-cyan-600/30 to-blue-600/30',
-    text: 'text-cyan-400',
-    border: 'border-cyan-500/30',
-    bg: 'bg-cyan-500/20',
-  },
-  rose: {
-    gradient: 'from-rose-600/30 to-orange-600/30',
-    text: 'text-rose-400',
-    border: 'border-rose-500/30',
-    bg: 'bg-rose-500/20',
+    iconBg: 'bg-purple-500/20',
   },
 };
 
@@ -106,29 +104,148 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.15,
       delayChildren: 0.2,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  hidden: { opacity: 0, y: 60, scale: 0.9 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
       type: 'spring',
-      stiffness: 100,
+      stiffness: 80,
       damping: 15,
     },
   },
 };
 
+// Tech stack visualization component
+function TechStackVisualization({ tags }) {
+  return (
+    <div className="flex flex-wrap gap-3">
+      {tags.map((tag, i) => (
+        <motion.span
+          key={tag}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 * i, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.05, y: -2 }}
+          className="px-4 py-2 text-sm font-semibold bg-slate-800/80 text-white rounded-xl border border-slate-600/50 hover:border-slate-500 shadow-lg transition-all cursor-default"
+        >
+          {tag}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+// Project stats visualization
+function ProjectStats({ stats }) {
+  return (
+    <div className="flex items-center gap-6 mt-4 pt-4 border-t border-slate-700/30">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-slate-700/50 flex items-center justify-center">
+          <Code className="w-5 h-5 text-slate-300" />
+        </div>
+        <div>
+          <p className="text-xs text-slate-500 uppercase tracking-wide">Commits</p>
+          <p className="text-lg font-bold text-white">{stats.commits}+</p>
+        </div>
+      </div>
+      <div className="w-px h-10 bg-slate-700/50" />
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-slate-700/50 flex items-center justify-center">
+          <Layers className="w-5 h-5 text-slate-300" />
+        </div>
+        <div>
+          <p className="text-xs text-slate-500 uppercase tracking-wide">Language</p>
+          <p className="text-lg font-bold text-white">{stats.language.split(' ')[0]}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Image component with fallback
+function ProjectImage({ src, alt, icon: Icon, colors, isHovered }) {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // If no image or error, show icon fallback
+  if (!src || imageError) {
+    return (
+      <div className="relative w-full h-full flex items-center justify-center">
+        {/* Background pattern */}
+        <motion.div
+          animate={{
+            scale: isHovered ? 1.1 : 1,
+            rotate: isHovered ? 5 : 0,
+          }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.05),transparent_50%)]" />
+          <motion.div
+            animate={{ y: isHovered ? -20 : 0, opacity: isHovered ? 0.5 : 0.2 }}
+            className="absolute top-10 right-10 w-20 h-20 rounded-full border border-white/10"
+          />
+          <motion.div
+            animate={{ y: isHovered ? 20 : 0, opacity: isHovered ? 0.5 : 0.2 }}
+            className="absolute bottom-10 left-10 w-16 h-16 rounded-full border border-white/10"
+          />
+        </motion.div>
+
+        {/* Icon */}
+        <motion.div
+          animate={{
+            scale: isHovered ? 1.15 : 1,
+            rotate: isHovered ? -5 : 0,
+            y: isHovered ? -5 : 0,
+          }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          className={`w-24 h-24 rounded-2xl bg-slate-800/90 backdrop-blur-sm flex items-center justify-center border ${colors.border} shadow-2xl`}
+        >
+          <Icon className={`w-12 h-12 ${colors.text}`} />
+        </motion.div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-full">
+      {/* Loading skeleton */}
+      {!imageLoaded && (
+        <div className="absolute inset-0 bg-slate-800 animate-pulse flex items-center justify-center">
+          <ImageOff className="w-12 h-12 text-slate-600" />
+        </div>
+      )}
+      
+      {/* Actual image */}
+      <motion.img
+        src={src}
+        alt={alt}
+        onLoad={() => setImageLoaded(true)}
+        onError={() => setImageError(true)}
+        animate={{
+          scale: isHovered ? 1.1 : 1,
+        }}
+        transition={{ duration: 0.5 }}
+        className={`w-full h-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+      />
+    </div>
+  );
+}
+
 function ProjectModal({ project, onClose }) {
   if (!project) return null;
   const colors = colorClasses[project.color] || colorClasses.indigo;
+  const Icon = project.icon;
 
   return (
     <motion.div
@@ -139,46 +256,65 @@ function ProjectModal({ project, onClose }) {
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.8, opacity: 0, y: 50 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
+        initial={{ scale: 0.8, opacity: 0, y: 50, rotateX: 10 }}
+        animate={{ scale: 1, opacity: 1, y: 0, rotateX: 0 }}
         exit={{ scale: 0.8, opacity: 0, y: 50 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className="relative w-full max-w-2xl bg-slate-900 rounded-3xl border border-slate-700/50 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Animated header gradient */}
-        <div className={`relative h-40 bg-gradient-to-br ${colors.gradient} overflow-hidden`}>
-          {/* Animated patterns */}
-          <motion.div
-            animate={{
-              rotate: [0, 360],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-0 opacity-30"
-          >
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-white/10 rounded-full blur-xl" />
-          </motion.div>
+        {/* Header with image or gradient */}
+        <div className={`relative h-56 overflow-hidden ${!project.image ? `bg-gradient-to-br ${colors.gradient}` : ''}`}>
+          {project.image ? (
+            <ProjectImage
+              src={project.image}
+              alt={project.title}
+              icon={Icon}
+              colors={colors}
+              isHovered={false}
+            />
+          ) : (
+            <>
+              {/* Animated background patterns */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-0"
+              >
+                <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
+                <div className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+              </motion.div>
 
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20" />
+              {/* Grid pattern */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:2rem_2rem]" />
 
-          <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: 'spring', delay: 0.2 }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div className={`w-20 h-20 rounded-2xl bg-slate-800/90 backdrop-blur-sm flex items-center justify-center border ${colors.border} shadow-xl`}>
-              <Folder className={`w-10 h-10 ${colors.text}`} />
-            </div>
-          </motion.div>
+              {/* Floating icon */}
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', delay: 0.2, stiffness: 200 }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                  className={`w-24 h-24 rounded-2xl bg-slate-800/90 backdrop-blur-sm flex items-center justify-center border ${colors.border} shadow-2xl`}
+                >
+                  <Icon className={`w-12 h-12 ${colors.text}`} />
+                </motion.div>
+              </motion.div>
+            </>
+          )}
+
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
 
           {/* Close button */}
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 bg-slate-800/80 hover:bg-slate-700 rounded-full text-slate-400 hover:text-white transition-colors"
+            className="absolute top-4 right-4 p-2 bg-slate-800/80 hover:bg-slate-700 rounded-full text-slate-400 hover:text-white transition-colors z-10"
           >
             <X className="w-5 h-5" />
           </motion.button>
@@ -188,7 +324,7 @@ function ProjectModal({ project, onClose }) {
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className={`absolute top-4 left-4 px-4 py-1.5 text-xs font-bold bg-slate-800/90 ${colors.text} rounded-full border ${colors.border}`}
+            className={`absolute top-4 left-4 px-4 py-1.5 text-xs font-bold bg-slate-800/90 ${colors.text} rounded-full border ${colors.border} z-10`}
           >
             {project.category}
           </motion.span>
@@ -199,7 +335,7 @@ function ProjectModal({ project, onClose }) {
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-bold bg-amber-500/20 text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1"
+              className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-bold bg-amber-500/20 text-amber-400 rounded-full border border-amber-500/30 flex items-center gap-1 z-10"
             >
               <Star className="w-3 h-3" /> Featured
             </motion.span>
@@ -226,29 +362,26 @@ function ProjectModal({ project, onClose }) {
             {project.longDescription}
           </motion.p>
 
-          {/* Tech stack */}
+          {/* Tech stack visualization */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
             className="mb-8"
           >
-            <h4 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">
-              Tech Stack
+            <h4 className="text-xs font-bold text-slate-400 mb-4 uppercase tracking-widest flex items-center gap-2">
+              <Code className="w-4 h-4" /> Technologies Used
             </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag, i) => (
-                <motion.span
-                  key={tag}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.5 + i * 0.05, type: 'spring' }}
-                  className={`px-4 py-2 text-sm font-medium ${colors.bg} ${colors.text} rounded-xl border ${colors.border}`}
-                >
-                  {tag}
-                </motion.span>
-              ))}
-            </div>
+            <TechStackVisualization tags={project.tags} />
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <ProjectStats stats={project.stats} />
           </motion.div>
 
           {/* Actions */}
@@ -256,21 +389,19 @@ function ProjectModal({ project, onClose }) {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 mt-6"
           >
-            {project.github && (
-              <motion.a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition-colors font-medium"
-              >
-                <Github className="w-5 h-5" />
-                View Code
-              </motion.a>
-            )}
+            <motion.a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition-colors font-medium"
+            >
+              <Github className="w-5 h-5" />
+              View Code
+            </motion.a>
             {project.demo && (
               <motion.a
                 href={project.demo}
@@ -278,7 +409,7 @@ function ProjectModal({ project, onClose }) {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${colors.gradient} text-white rounded-xl transition-colors font-medium border ${colors.border}`}
+                className={`flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${colors.gradientSolid} text-white rounded-xl transition-colors font-medium shadow-lg`}
               >
                 <Globe className="w-5 h-5" />
                 Live Demo
@@ -294,21 +425,22 @@ function ProjectModal({ project, onClose }) {
 function ProjectCard({ project, index, onSelect }) {
   const [isHovered, setIsHovered] = useState(false);
   const colors = colorClasses[project.color] || colorClasses.indigo;
+  const Icon = project.icon;
 
   return (
     <motion.div
       variants={cardVariants}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      whileHover={{ y: -10 }}
+      whileHover={{ y: -12 }}
       onClick={() => onSelect(project)}
-      className="group relative bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 overflow-hidden cursor-pointer"
+      className="group relative bg-slate-800/40 backdrop-blur-sm rounded-3xl border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 overflow-hidden cursor-pointer card-glow"
     >
       {/* Animated glow */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 0.5 : 0 }}
-        className={`absolute -inset-0.5 bg-gradient-to-r ${colors.gradient} rounded-2xl blur-xl transition-opacity`}
+        animate={{ opacity: isHovered ? 0.6 : 0 }}
+        className={`absolute -inset-1 bg-gradient-to-r ${colors.gradient} rounded-3xl blur-xl transition-opacity`}
       />
 
       {/* Featured badge */}
@@ -317,7 +449,7 @@ function ProjectCard({ project, index, onSelect }) {
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: index * 0.1 + 0.3 }}
-          className="absolute top-4 right-4 z-20 px-3 py-1.5 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full border border-amber-500/30 flex items-center gap-1"
+          className="absolute top-4 right-4 z-20 px-3 py-1.5 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full border border-amber-500/30 flex items-center gap-1 shadow-lg backdrop-blur-sm"
         >
           <Star className="w-3 h-3" /> Featured
         </motion.div>
@@ -328,44 +460,23 @@ function ProjectCard({ project, index, onSelect }) {
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: index * 0.1 + 0.2 }}
-        className={`absolute top-4 left-4 z-20 px-3 py-1.5 bg-slate-800/90 ${colors.text} text-xs font-bold rounded-full border ${colors.border}`}
+        className={`absolute top-4 left-4 z-20 px-3 py-1.5 bg-slate-800/90 backdrop-blur-sm ${colors.text} text-xs font-bold rounded-full border ${colors.border}`}
       >
         {project.category}
       </motion.div>
 
-      {/* Project preview */}
-      <div className={`relative h-52 md:h-60 overflow-hidden bg-gradient-to-br ${colors.gradient}`}>
-        {/* Animated background pattern */}
-        <motion.div
-          animate={{
-            scale: isHovered ? 1.1 : 1,
-            rotate: isHovered ? 5 : 0,
-          }}
-          transition={{ duration: 0.5 }}
-          className="absolute inset-0"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.05),transparent_50%)]" />
-        </motion.div>
-
-        {/* Project icon */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          <motion.div
-            animate={{
-              scale: isHovered ? 1.1 : 1,
-              rotate: isHovered ? -5 : 0,
-            }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            className={`w-20 h-20 rounded-2xl bg-slate-800/90 backdrop-blur-sm flex items-center justify-center border ${colors.border} shadow-2xl`}
-          >
-            <span className={`text-3xl font-bold ${colors.text} font-[Space_Grotesk]`}>
-              {project.title.charAt(0)}
-            </span>
-          </motion.div>
-        </div>
+      {/* Project preview with image or icon */}
+      <div className={`relative h-56 md:h-64 overflow-hidden ${!project.image ? `bg-gradient-to-br ${colors.gradient}` : 'bg-slate-900'}`}>
+        <ProjectImage
+          src={project.image}
+          alt={project.title}
+          icon={Icon}
+          colors={colors}
+          isHovered={isHovered}
+        />
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none" />
 
         {/* Hover overlay with CTA */}
         <motion.div
@@ -376,9 +487,9 @@ function ProjectCard({ project, index, onSelect }) {
           <motion.span
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-            className={`px-6 py-3 bg-gradient-to-r ${colors.gradient} text-white text-sm font-bold rounded-full flex items-center gap-2 border ${colors.border}`}
+            className={`px-6 py-3 bg-gradient-to-r ${colors.gradientSolid} text-white text-sm font-bold rounded-full flex items-center gap-2 shadow-xl`}
           >
-            <Code className="w-4 h-4" />
+            <Layout className="w-4 h-4" />
             View Details
           </motion.span>
         </motion.div>
@@ -386,58 +497,63 @@ function ProjectCard({ project, index, onSelect }) {
 
       {/* Content */}
       <div className="relative z-10 p-6 bg-slate-900/50">
-        <h3 className={`text-xl font-bold text-white mb-3 font-[Space_Grotesk] group-hover:${colors.text} transition-colors`}>
+        <h3 className="text-xl font-bold text-white mb-3 font-[Space_Grotesk] group-hover:text-indigo-300 transition-colors">
           {project.title}
         </h3>
         <p className="text-slate-400 text-sm mb-4 line-clamp-2 leading-relaxed">
           {project.description}
         </p>
 
-        {/* Tags */}
+        {/* Tags preview */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.slice(0, 3).map((tag, i) => (
+          {project.tags.slice(0, 4).map((tag, i) => (
             <span
               key={i}
-              className={`px-3 py-1 text-xs font-medium ${colors.bg} ${colors.text} rounded-full border ${colors.border}`}
+              className="px-3 py-1.5 text-xs font-semibold bg-slate-700/60 text-slate-200 rounded-lg border border-slate-600/40 hover:bg-slate-600/60 transition-colors"
             >
               {tag}
             </span>
           ))}
-          {project.tags.length > 3 && (
-            <span className="px-3 py-1 text-xs font-medium bg-slate-700/50 text-slate-400 rounded-full border border-slate-600/30">
-              +{project.tags.length - 3}
+          {project.tags.length > 4 && (
+            <span className="px-3 py-1.5 text-xs font-semibold bg-slate-800/60 text-slate-400 rounded-lg border border-slate-700/40">
+              +{project.tags.length - 4}
             </span>
           )}
         </div>
 
         {/* Quick links */}
-        <div className="flex items-center gap-4 pt-4 border-t border-slate-700/30">
-          {project.github && (
+        <div className="flex items-center justify-between pt-4 border-t border-slate-700/30">
+          <div className="flex items-center gap-5">
             <motion.a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
+              whileHover={{ scale: 1.05, x: 2 }}
+              className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
               <Github className="w-4 h-4" />
               Code
             </motion.a>
-          )}
-          {project.demo && (
-            <motion.a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              whileHover={{ scale: 1.1 }}
-              className={`flex items-center gap-1.5 text-sm text-slate-400 hover:${colors.text} transition-colors`}
-            >
-              <ExternalLink className="w-4 h-4" />
-              Demo
-            </motion.a>
-          )}
+            {project.demo && (
+              <motion.a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                whileHover={{ scale: 1.05, x: 2 }}
+                className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-indigo-400 transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Live Demo
+              </motion.a>
+            )}
+          </div>
+
+          {/* Language badge */}
+          <span className="px-3 py-1.5 text-xs font-bold bg-slate-700/50 text-slate-300 rounded-lg">
+            {project.stats.language.split(' ')[0]}
+          </span>
         </div>
       </div>
     </motion.div>
@@ -473,15 +589,46 @@ export default function Projects() {
         <SectionHeader
           label="My Work"
           title="Featured Projects"
-          description="A showcase of projects spanning web development, data engineering, and cybersecurity."
+          description="Real-world applications showcasing my expertise in full-stack development and data analytics."
         />
 
-        {/* Projects grid with staggered animation */}
+        {/* Project stats overview */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-6 md:gap-12 mb-12 py-6 border-y border-slate-800/50"
+        >
+          {[
+            { icon: Folder, label: 'Projects', value: '4+' },
+            { icon: Code, label: 'Technologies', value: '10+' },
+            { icon: Server, label: 'Deployed', value: '3' },
+            { icon: Star, label: 'Featured', value: '2' },
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 * i }}
+              className="flex items-center gap-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+                <stat.icon className="w-5 h-5 text-indigo-400" />
+              </div>
+              <div>
+                <p className="text-xl font-bold text-white">{stat.value}</p>
+                <p className="text-xs text-slate-500">{stat.label}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Projects grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 gap-8"
         >
           {projects.map((project, index) => (
             <ProjectCard
@@ -503,7 +650,7 @@ export default function Projects() {
         >
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button href="https://github.com/Y3B3L4Y3" variant="outline" size="lg">
-              View All Projects
+              View All on GitHub
               <ArrowRight className="w-5 h-5" />
             </Button>
           </motion.div>

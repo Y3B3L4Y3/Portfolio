@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { ArrowRight, Github, Mail, FileDown, ChevronDown } from 'lucide-react';
+import { ArrowRight, Github, Mail, FileDown, ChevronDown, Briefcase, MapPin } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 
 // Animated counter component
@@ -22,12 +22,12 @@ function AnimatedCounter({ value, duration = 2 }) {
 
 // Floating particles background
 function FloatingParticles() {
-  const particles = Array.from({ length: 50 }, (_, i) => ({
+  const particles = Array.from({ length: 40 }, (_, i) => ({
     id: i,
-    size: Math.random() * 4 + 1,
+    size: Math.random() * 3 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    duration: Math.random() * 20 + 10,
+    duration: Math.random() * 20 + 15,
     delay: Math.random() * 5,
   }));
 
@@ -36,7 +36,7 @@ function FloatingParticles() {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-indigo-500/20"
+          className="absolute rounded-full bg-indigo-400/30"
           style={{
             width: particle.size,
             height: particle.size,
@@ -44,8 +44,8 @@ function FloatingParticles() {
             top: `${particle.y}%`,
           }}
           animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.6, 0.2],
+            y: [0, -40, 0],
+            opacity: [0.1, 0.5, 0.1],
           }}
           transition={{
             duration: particle.duration,
@@ -62,27 +62,27 @@ function FloatingParticles() {
 // Animated grid background
 function AnimatedGrid() {
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden opacity-60">
       {/* Horizontal lines */}
-      {[...Array(20)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={`h-${i}`}
-          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent"
-          style={{ top: `${(i + 1) * 5}%` }}
+          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent"
+          style={{ top: `${(i + 1) * 6.67}%` }}
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 1.5, delay: i * 0.05 }}
+          transition={{ duration: 1.5, delay: i * 0.03 }}
         />
       ))}
       {/* Vertical lines */}
-      {[...Array(20)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={`v-${i}`}
-          className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-indigo-500/10 to-transparent"
-          style={{ left: `${(i + 1) * 5}%` }}
+          className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-indigo-500/20 to-transparent"
+          style={{ left: `${(i + 1) * 6.67}%` }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ duration: 1.5, delay: i * 0.05 }}
+          transition={{ duration: 1.5, delay: i * 0.03 }}
         />
       ))}
     </div>
@@ -142,11 +142,11 @@ function GlowingOrb({ className, delay = 0 }) {
     <motion.div
       className={`absolute rounded-full blur-3xl ${className}`}
       animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.3, 0.5, 0.3],
+        scale: [1, 1.3, 1],
+        opacity: [0.2, 0.4, 0.2],
       }}
       transition={{
-        duration: 4,
+        duration: 5,
         repeat: Infinity,
         delay,
         ease: 'easeInOut',
@@ -156,12 +156,7 @@ function GlowingOrb({ className, delay = 0 }) {
 }
 
 export default function Hero() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   const stats = [
     { label: 'Projects', value: 20 },
@@ -180,7 +175,7 @@ export default function Hero() {
       {/* Animated Background Layers */}
       <div className="absolute inset-0">
         {/* Deep space gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/20 via-[#030014] to-[#030014]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/30 via-[#030014] to-[#030014]" />
         
         {/* Animated grid */}
         <AnimatedGrid />
@@ -188,35 +183,48 @@ export default function Hero() {
         {/* Floating particles */}
         <FloatingParticles />
         
-        {/* Glowing orbs */}
-        <GlowingOrb className="w-[500px] h-[500px] -top-48 -left-48 bg-indigo-600/30" delay={0} />
-        <GlowingOrb className="w-[400px] h-[400px] top-1/2 -right-32 bg-purple-600/20" delay={1} />
-        <GlowingOrb className="w-[300px] h-[300px] bottom-0 left-1/3 bg-cyan-600/20" delay={2} />
+        {/* Glowing orbs - Professional positioning */}
+        <GlowingOrb className="w-[600px] h-[600px] -top-64 -left-64 bg-indigo-600/25" delay={0} />
+        <GlowingOrb className="w-[500px] h-[500px] top-1/2 -right-48 bg-purple-600/20" delay={1.5} />
+        <GlowingOrb className="w-[400px] h-[400px] -bottom-32 left-1/4 bg-cyan-600/15" delay={3} />
         
         {/* Radial gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,#030014_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,transparent_0%,#030014_75%)]" />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-20">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24">
         <div className="text-center">
-          {/* Status Badge with Glow */}
+          {/* Status Badge with Enhanced Glow */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: 'spring' }}
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, type: 'spring', stiffness: 200 }}
             className="mb-8 inline-block"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-emerald-500/30 blur-xl rounded-full" />
-              <span className="relative inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-semibold">
-                <span className="relative flex h-2 w-2">
+            <div className="relative group">
+              {/* Outer glow */}
+              <div className="absolute -inset-1 bg-emerald-500/20 blur-xl rounded-full group-hover:bg-emerald-500/30 transition-colors" />
+              
+              <span className="relative inline-flex items-center gap-3 px-6 py-3 bg-emerald-500/10 backdrop-blur-md border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-semibold shadow-lg shadow-emerald-500/10">
+                <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </span>
-                
+                Open to Opportunities
               </span>
             </div>
+          </motion.div>
+
+          {/* Location Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex items-center justify-center gap-2 text-slate-500 text-sm mb-6"
+          >
+            <MapPin className="w-4 h-4" />
+            <span>Addis Ababa, Ethiopia</span>
           </motion.div>
 
           {/* Greeting */}
@@ -238,11 +246,11 @@ export default function Hero() {
           >
             <AnimatedText
               text="Yafet Zekariyas"
-              className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-sm"
             />
           </motion.h1>
 
-          {/* Animated Role with Typing Effect */}
+          {/* Animated Role */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -251,9 +259,9 @@ export default function Hero() {
           >
             <span className="text-xl md:text-2xl lg:text-3xl font-semibold">
               <span className="text-indigo-400">Self-Taught</span>
-              <span className="text-slate-400 mx-3">•</span>
+              <span className="text-slate-600 mx-3">•</span>
               <span className="text-white">Full-Stack Developer</span>
-              <span className="text-slate-400 mx-3">•</span>
+              <span className="text-slate-600 mx-3">•</span>
               <span className="text-purple-400">Data Analyst</span>
             </span>
           </motion.div>
@@ -265,9 +273,9 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 1 }}
             className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            ECE graduate turned passionate developer. ALX-certified engineer specializing in 
-            building <span className="text-white font-medium">modern web applications</span> and 
-            transforming <span className="text-white font-medium">data into insights</span>.
+            Electrical & Computer Engineering graduate, <span className="text-indigo-400 font-medium">ALX-certified</span> engineer 
+            specializing in building <span className="text-white font-medium">secure, data-driven</span> web applications 
+            and transforming raw data into <span className="text-white font-medium">actionable insights</span>.
           </motion.p>
 
           {/* Tech Stack with Staggered Animation */}
@@ -290,17 +298,17 @@ export default function Hero() {
                 }}
                 whileHover={{
                   scale: 1.1,
-                  backgroundColor: 'rgba(99, 102, 241, 0.2)',
-                  borderColor: 'rgba(99, 102, 241, 0.5)',
+                  y: -3,
+                  boxShadow: '0 10px 30px rgba(99, 102, 241, 0.2)',
                 }}
-                className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-slate-300 font-medium cursor-default transition-colors"
+                className="px-5 py-2.5 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl text-sm text-slate-300 font-medium cursor-default transition-all hover:border-indigo-500/40 hover:bg-slate-800/80"
               >
                 {tech}
               </motion.span>
             ))}
           </motion.div>
 
-          {/* CTA Buttons with Hover Effects */}
+          {/* CTA Buttons with Enhanced Effects */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -311,7 +319,7 @@ export default function Hero() {
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-4 overflow-hidden rounded-xl font-semibold text-white"
+              className="group relative px-8 py-4 overflow-hidden rounded-2xl font-semibold text-white btn-shadow"
             >
               {/* Animated gradient background */}
               <motion.div
@@ -319,8 +327,10 @@ export default function Hero() {
                 animate={{ backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
               />
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-indigo-500/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              {/* Inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-white/10" />
+              {/* Hover glow */}
+              <div className="absolute inset-0 bg-indigo-500/50 blur-xl opacity-0 group-hover:opacity-60 transition-opacity" />
               <span className="relative flex items-center gap-2">
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -331,36 +341,36 @@ export default function Hero() {
               href="#contact"
               whileHover={{ scale: 1.05, borderColor: 'rgba(99, 102, 241, 0.5)' }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl font-semibold text-white transition-all"
+              className="group flex items-center gap-2 px-8 py-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl font-semibold text-white transition-all hover:bg-slate-800/80 hover:shadow-lg"
             >
               <Mail className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
               Contact Me
             </motion.a>
           </motion.div>
 
-          {/* Resume Download - Prominent Button */}
+          {/* Resume Download - Premium Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.8 }}
           >
             <motion.a
-              href="/resume.pdf"
+              href="/resume/yz.pdf"
               download="Yafet_Zekariyas_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative inline-flex items-center gap-3 px-6 py-3 overflow-hidden rounded-xl font-semibold transition-all"
+              className="group relative inline-flex items-center gap-3 px-7 py-3.5 overflow-hidden rounded-2xl font-semibold transition-all"
             >
               {/* Gradient border effect */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 p-[2px]">
-                <div className="h-full w-full rounded-[10px] bg-[#030014]" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 p-[2px] bg-[length:200%_100%] animate-gradient">
+                <div className="h-full w-full rounded-[14px] bg-[#030014] group-hover:bg-slate-900/80 transition-colors" />
               </div>
               
               {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-500/30 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
               
               {/* Content */}
-              <span className="relative flex items-center gap-2 text-amber-400 group-hover:text-amber-300 transition-colors">
+              <span className="relative flex items-center gap-2.5 text-amber-400 group-hover:text-amber-300 transition-colors">
                 <FileDown className="w-5 h-5 group-hover:animate-bounce" />
                 <span>Download Resume</span>
               </span>
@@ -380,7 +390,8 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 2.2 + index * 0.1 }}
-                className="text-center"
+                whileHover={{ y: -5 }}
+                className="text-center cursor-default"
               >
                 <div className="text-3xl md:text-4xl font-bold text-white mb-1">
                   <AnimatedCounter value={stat.value} duration={2} />+
@@ -395,7 +406,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 2.4 }}
-            className="flex items-center justify-center gap-6 mt-10"
+            className="flex items-center justify-center gap-5 mt-10"
           >
             {[
               { icon: Github, href: 'https://github.com/Y3B3L4Y3', label: 'GitHub' },
@@ -406,9 +417,9 @@ export default function Hero() {
                 href={social.href}
                 target={social.icon === Github ? '_blank' : undefined}
                 rel={social.icon === Github ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.2, y: -3 }}
+                whileHover={{ scale: 1.15, y: -4 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all"
+                className="p-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-lg hover:shadow-indigo-500/10 transition-all"
                 aria-label={social.label}
               >
                 <social.icon className="w-5 h-5" />
