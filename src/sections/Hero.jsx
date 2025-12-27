@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { ArrowRight, Github, Mail, FileDown, ChevronDown, Briefcase, MapPin } from 'lucide-react';
+import { ArrowRight, Github, Mail, FileDown, ChevronDown, MapPin } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 
 // Animated counter component
@@ -20,23 +20,23 @@ function AnimatedCounter({ value, duration = 2 }) {
   return <span>{displayValue}</span>;
 }
 
-// Floating particles background
+// Subtle floating particles - reduced count for performance
 function FloatingParticles() {
-  const particles = Array.from({ length: 40 }, (_, i) => ({
+  const particles = Array.from({ length: 20 }, (_, i) => ({
     id: i,
-    size: Math.random() * 3 + 1,
+    size: Math.random() * 2 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    duration: Math.random() * 20 + 15,
+    duration: Math.random() * 30 + 20,
     delay: Math.random() * 5,
   }));
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-indigo-400/30"
+          className="absolute rounded-full bg-indigo-400/20"
           style={{
             width: particle.size,
             height: particle.size,
@@ -44,8 +44,8 @@ function FloatingParticles() {
             top: `${particle.y}%`,
           }}
           animate={{
-            y: [0, -40, 0],
-            opacity: [0.1, 0.5, 0.1],
+            y: [0, -30, 0],
+            opacity: [0.1, 0.3, 0.1],
           }}
           transition={{
             duration: particle.duration,
@@ -59,32 +59,11 @@ function FloatingParticles() {
   );
 }
 
-// Animated grid background
-function AnimatedGrid() {
+// Static grid background - no animation for better performance
+function GridBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden opacity-60">
-      {/* Horizontal lines */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={`h-${i}`}
-          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent"
-          style={{ top: `${(i + 1) * 6.67}%` }}
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 1.5, delay: i * 0.03 }}
-        />
-      ))}
-      {/* Vertical lines */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={`v-${i}`}
-          className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-indigo-500/20 to-transparent"
-          style={{ left: `${(i + 1) * 6.67}%` }}
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ duration: 1.5, delay: i * 0.03 }}
-        />
-      ))}
+    <div className="absolute inset-0 overflow-hidden opacity-40 pointer-events-none">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#6366f1_1px,transparent_1px),linear-gradient(to_bottom,#6366f1_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-[0.03]" />
     </div>
   );
 }
@@ -136,25 +115,6 @@ function AnimatedText({ text, className }) {
   );
 }
 
-// Glowing orb component
-function GlowingOrb({ className, delay = 0 }) {
-  return (
-    <motion.div
-      className={`absolute rounded-full blur-3xl ${className}`}
-      animate={{
-        scale: [1, 1.3, 1],
-        opacity: [0.2, 0.4, 0.2],
-      }}
-      transition={{
-        duration: 5,
-        repeat: Infinity,
-        delay,
-        ease: 'easeInOut',
-      }}
-    />
-  );
-}
-
 export default function Hero() {
   const containerRef = useRef(null);
 
@@ -172,21 +132,21 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030014]"
     >
-      {/* Animated Background Layers */}
+      {/* Background Layers - Simplified for performance */}
       <div className="absolute inset-0">
         {/* Deep space gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/30 via-[#030014] to-[#030014]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/20 via-[#030014] to-[#030014]" />
         
-        {/* Animated grid */}
-        <AnimatedGrid />
+        {/* Static grid */}
+        <GridBackground />
         
-        {/* Floating particles */}
+        {/* Subtle floating particles */}
         <FloatingParticles />
         
-        {/* Glowing orbs - Professional positioning */}
-        <GlowingOrb className="w-[600px] h-[600px] -top-64 -left-64 bg-indigo-600/25" delay={0} />
-        <GlowingOrb className="w-[500px] h-[500px] top-1/2 -right-48 bg-purple-600/20" delay={1.5} />
-        <GlowingOrb className="w-[400px] h-[400px] -bottom-32 left-1/4 bg-cyan-600/15" delay={3} />
+        {/* Static gradient orbs - no animation for stability */}
+        <div className="absolute w-[600px] h-[600px] -top-64 -left-64 bg-indigo-600/15 rounded-full blur-[120px]" />
+        <div className="absolute w-[500px] h-[500px] top-1/2 -right-48 bg-indigo-500/10 rounded-full blur-[120px]" />
+        <div className="absolute w-[400px] h-[400px] -bottom-32 left-1/4 bg-cyan-600/10 rounded-full blur-[120px]" />
         
         {/* Radial gradient overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,transparent_0%,#030014_75%)]" />
@@ -195,25 +155,20 @@ export default function Hero() {
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24">
         <div className="text-center">
-          {/* Status Badge with Enhanced Glow */}
+          {/* Status Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, type: 'spring', stiffness: 200 }}
             className="mb-8 inline-block"
           >
-            <div className="relative group">
-              {/* Outer glow */}
-              <div className="absolute -inset-1 bg-emerald-500/20 blur-xl rounded-full group-hover:bg-emerald-500/30 transition-colors" />
-              
-              <span className="relative inline-flex items-center gap-3 px-6 py-3 bg-emerald-500/10 backdrop-blur-md border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-semibold shadow-lg shadow-emerald-500/10">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </span>
-                Open to Opportunities
+            <span className="inline-flex items-center gap-3 px-6 py-3 bg-emerald-500/10 backdrop-blur-md border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-semibold shadow-lg shadow-emerald-500/5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
               </span>
-            </div>
+              Open to Opportunities
+            </span>
           </motion.div>
 
           {/* Location Badge */}
@@ -246,11 +201,11 @@ export default function Hero() {
           >
             <AnimatedText
               text="Yafet Zekariyas"
-              className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-sm"
+              className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent"
             />
           </motion.h1>
 
-          {/* Animated Role */}
+          {/* Role */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -262,7 +217,7 @@ export default function Hero() {
               <span className="text-slate-600 mx-3">•</span>
               <span className="text-white">Full-Stack Developer</span>
               <span className="text-slate-600 mx-3">•</span>
-              <span className="text-purple-400">Data Analyst</span>
+              <span className="text-cyan-400">Data Analyst</span>
             </span>
           </motion.div>
 
@@ -278,7 +233,7 @@ export default function Hero() {
             and transforming raw data into <span className="text-white font-medium">actionable insights</span>.
           </motion.p>
 
-          {/* Tech Stack with Staggered Animation */}
+          {/* Tech Stack */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -288,8 +243,8 @@ export default function Hero() {
             {techStack.map((tech, index) => (
               <motion.span
                 key={tech}
-                initial={{ opacity: 0, scale: 0, rotate: -10 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{
                   duration: 0.4,
                   delay: 1.3 + index * 0.1,
@@ -297,9 +252,8 @@ export default function Hero() {
                   stiffness: 200,
                 }}
                 whileHover={{
-                  scale: 1.1,
-                  y: -3,
-                  boxShadow: '0 10px 30px rgba(99, 102, 241, 0.2)',
+                  scale: 1.05,
+                  y: -2,
                 }}
                 className="px-5 py-2.5 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl text-sm text-slate-300 font-medium cursor-default transition-all hover:border-indigo-500/40 hover:bg-slate-800/80"
               >
@@ -308,7 +262,7 @@ export default function Hero() {
             ))}
           </motion.div>
 
-          {/* CTA Buttons with Enhanced Effects */}
+          {/* CTA Buttons - Solid colors, no animation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -319,19 +273,9 @@ export default function Hero() {
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-4 overflow-hidden rounded-2xl font-semibold text-white btn-shadow"
+              className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-2xl font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all"
             >
-              {/* Animated gradient background */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_100%]"
-                animate={{ backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              />
-              {/* Inner glow */}
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-white/10" />
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-indigo-500/50 blur-xl opacity-0 group-hover:opacity-60 transition-opacity" />
-              <span className="relative flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </span>
@@ -339,41 +283,30 @@ export default function Hero() {
 
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.05, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 px-8 py-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl font-semibold text-white transition-all hover:bg-slate-800/80 hover:shadow-lg"
+              className="group flex items-center gap-2 px-8 py-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl font-semibold text-white transition-all hover:bg-slate-800/80 hover:border-indigo-500/30"
             >
               <Mail className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
               Contact Me
             </motion.a>
           </motion.div>
 
-          {/* Resume Download - Premium Button */}
+          {/* Resume Download Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.8 }}
           >
             <motion.a
-              href="/resume/yz.pdf"
-              download="Yafet_Zekariyas_Resume.pdf"
+              href="/public/resume/y.pdf"
+              download="z_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative inline-flex items-center gap-3 px-7 py-3.5 overflow-hidden rounded-2xl font-semibold transition-all"
+              className="group inline-flex items-center gap-2.5 px-6 py-3 bg-amber-500/10 border-2 border-amber-500/50 rounded-xl font-semibold text-amber-400 hover:bg-amber-500/20 hover:border-amber-400 transition-all"
             >
-              {/* Gradient border effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 p-[2px] bg-[length:200%_100%] animate-gradient">
-                <div className="h-full w-full rounded-[14px] bg-[#030014] group-hover:bg-slate-900/80 transition-colors" />
-              </div>
-              
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-500/30 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
-              
-              {/* Content */}
-              <span className="relative flex items-center gap-2.5 text-amber-400 group-hover:text-amber-300 transition-colors">
-                <FileDown className="w-5 h-5 group-hover:animate-bounce" />
-                <span>Download Resume</span>
-              </span>
+              <FileDown className="w-5 h-5" />
+              <span>Download Resume</span>
             </motion.a>
           </motion.div>
 
@@ -390,7 +323,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 2.2 + index * 0.1 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -3 }}
                 className="text-center cursor-default"
               >
                 <div className="text-3xl md:text-4xl font-bold text-white mb-1">
@@ -417,9 +350,9 @@ export default function Hero() {
                 href={social.href}
                 target={social.icon === Github ? '_blank' : undefined}
                 rel={social.icon === Github ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.15, y: -4 }}
+                whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 hover:shadow-lg hover:shadow-indigo-500/10 transition-all"
+                className="p-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all"
                 aria-label={social.label}
               >
                 <social.icon className="w-5 h-5" />
@@ -448,12 +381,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Bottom gradient line */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1, delay: 2.5 }}
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"
-      />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
     </section>
   );
 }
